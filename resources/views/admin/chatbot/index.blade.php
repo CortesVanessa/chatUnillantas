@@ -1,6 +1,7 @@
 
 @extends('tablar::page')
 @section('content')
+
 <div class="card">
     <div class="card-header d-flex justify-content-between">
         <h3>🤖 Chatbot - Respuestas</h3>
@@ -11,7 +12,7 @@
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
-                    <th>Trigger</th>
+                    <th>Palabra clave</th>
                     <th>Respuesta</th>
                     <th>Opciones</th>
                     <th>Acciones</th>

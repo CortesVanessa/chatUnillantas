@@ -1,6 +1,7 @@
 
 @extends('tablar::page')
 @section('content')
+
 <div class="card">
     <div class="card-header">
         <h3>✏️ Editar respuesta</h3>
@@ -30,4 +31,7 @@
         </form>
     </div>
 </div>
+
+
+
 @endsection

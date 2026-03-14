@@ -29,3 +29,30 @@
 
 // Custom Icon Sizes and Styles
 @import "../css/icon-style.css";
+
+
+.input-width-small {
+    max-width: 250px;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.input-width-small {
+    max-width: 100%;
+}
+
+.card {
+    border-radius: 14px;
+}
+
+
+

@@ -102,7 +102,7 @@ public function publicChat(Request $request)
     ChatMessage::create([
         'session_id' => $sessionId,
         'sender' => 'bot',
-        'message' => 'Hola 👋Bienvenid@ somos unillantas de oaxaca,¿En que podemos servirte?.'
+        'message' => 'Hola 👋Bienvenid@ somos unillantas de oaxaca,¿En que podemos servirte?'
     ]);
 
     // Cargar mensajes (solo el inicial)

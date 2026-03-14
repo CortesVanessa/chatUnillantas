@@ -1,3 +1,9 @@
+<div class="container-xl">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
 
 <div class="form-group mb-3">
     <label class="form-label">   {{ Form::label('nombre') }}</label>
@@ -66,7 +72,7 @@
         <small class="form-hint">Seleccione hora disponible entre 9:00 y 18:00.</small>
     </div>
    
-</div>
+
 
 </div>
 <div class="form-group mb-3">
@@ -87,6 +93,12 @@
             </div>
         </div>
     </div>
+    </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
 

@@ -1,11 +1,17 @@
+<div class="container-xl">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
 
 <div class="form-group mb-3">
-    <label class="form-label">   {{ Form::label('name') }}</label>
+    <label class="form-label">{{ Form::label('name') }}</label>
     <div>
-        {{ Form::text('name', $user->name, [
-    'class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''),
+     {{ Form::text('name', $user->name, [
+    'class' => 'form-control input-width-small' . ($errors->has('name') ? ' is-invalid' : ''),
     'placeholder' => 'Name',
-    'maxlength' => 15,
+    'maxlength' => 25,
     'oninput' => "this.value = this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '')"
 ]) }}
 {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
@@ -17,7 +23,7 @@
     <label class="form-label">{{ Form::label('apellido_paterno') }}</label>
     <div>
        {{ Form::text('apellido_paterno', $user->apellido_paterno, [
-    'class' => 'form-control' . ($errors->has('apellido_paterno') ? ' is-invalid' : ''),
+    'class' => 'form-control input-width-small' . ($errors->has('apellido_paterno') ? ' is-invalid' : ''),
     'placeholder' => 'Apellido Paterno',
     'maxlength' => 15,
     'oninput' => "this.value = this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '')"
@@ -31,7 +37,7 @@
     <label class="form-label">{{ Form::label('apellido_materno') }}</label>
     <div>
         {{ Form::text('apellido_materno', $user->apellido_materno, [
-    'class' => 'form-control' . ($errors->has('apellido_materno') ? ' is-invalid' : ''),
+    'class' => 'form-control input-width-small' . ($errors->has('apellido_materno') ? ' is-invalid' : ''),
     'placeholder' => 'Apellido Materno',
     'maxlength' => 15,
     'oninput' => "this.value = this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ]/g, '')"
@@ -45,8 +51,7 @@
 <div class="form-group mb-3">
     <label class="form-label">   {{ Form::label('email') }}</label>
     <div>
-    {{ Form::text('email', $user->email, [
-        'class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''),
+    {{ Form::text('email', $user->email, [ 'class' => 'form-control input-width-small' . ($errors->has('email') ? ' is-invalid' : ''),
         'placeholder' => 'Email'
     ]) }}
     {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
@@ -71,3 +76,10 @@
             </div>
         </div>
     </div>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

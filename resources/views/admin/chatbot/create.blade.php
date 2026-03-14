@@ -1,6 +1,12 @@
 
 @extends('tablar::page')
 @section('content')
+<div class="container-xl">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
 <div class="card">
     <div class="card-header">
         <h3>➕ Nueva respuesta del chatbot</h3>
@@ -11,7 +17,7 @@
             @csrf
 
             <div class="mb-3">
-                <label>Trigger (palabra clave)</label>
+                <label>Palabra Clave</label>
                 <input type="text" name="trigger" class="form-control" required>
             </div>
 
@@ -29,4 +35,12 @@
         </form>
     </div>
 </div>
+
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
 @endsection

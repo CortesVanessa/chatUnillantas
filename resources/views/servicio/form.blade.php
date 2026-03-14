@@ -1,3 +1,11 @@
+<div class="container-xl">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+
+
 
 <div class="form-group mb-3">
     <label class="form-label">   {{ Form::label('clave') }}</label>
@@ -41,3 +49,9 @@
             </div>
         </div>
     </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
