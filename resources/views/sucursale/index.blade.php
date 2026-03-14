@@ -20,19 +20,79 @@
                 </div>
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a href="{{ route('sucursales.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="12" y1="5" x2="12" y2="19"/>
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                            </svg>
-                            Create Sucursale
-                        </a>
+                    <button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#modalSucursal">
+    + Nueva Sucursal
+</button>
+<div class="modal fade" id="modalSucursal" tabindex="-1" aria-labelledby="modalSucursalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+
+            <form action="{{ route('sucursales.store') }}" method="POST">
+                @csrf
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSucursalLabel">Crear Sucursal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- NOMBRE SUCURSAL -->
+                    <div class="mb-3">
+                        <label class="form-label">Nombre Sucursal</label>
+                        {{ Form::text('nombre_sucursal', old('nombre_sucursal'), [
+                            'class' => 'form-control' . ($errors->has('nombre_sucursal') ? ' is-invalid' : ''),
+                            'placeholder' => 'Nombre Sucursal',
+                            'maxlength' => 100,
+                            'oninput' => "this.value = this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ ]/gi,'')"
+                        ]) }}
+                        {!! $errors->first('nombre_sucursal', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
+
+                    <!-- DIRECCIÓN -->
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        {{ Form::text('direccion', old('direccion'), [
+                            'class' => 'form-control' . ($errors->has('direccion') ? ' is-invalid' : ''),
+                            'placeholder' => 'Dirección'
+                        ]) }}
+                        {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- TELÉFONO -->
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        {{ Form::text('telefono', old('telefono'), [
+                            'class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''),
+                            'placeholder' => 'Teléfono',
+                            'maxlength' => 10,
+                            'pattern' => '[0-9]{10}',
+                            'inputmode' => 'numeric',
+                            'oninput' => "this.value = this.value.replace(/[^0-9]/g, '')"
+                        ]) }}
+                        {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
@@ -49,25 +109,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Sucursale</h3>
                         </div>
-                        <div class="card-body border-bottom py-3">
-                            <div class="d-flex">
-                                <div class="text-muted">
-                                    Show
-                                    <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="10" size="3"
-                                               aria-label="Invoices count">
-                                    </div>
-                                    entries
-                                </div>
-                                <div class="ms-auto text-muted">
-                                    Search:
-                                    <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm"
-                                               aria-label="Search invoice">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="table-responsive min-vh-100">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -109,16 +151,16 @@
                                                 <div class="dropdown">
                                                     <button class="btn dropdown-toggle align-text-top"
                                                             data-bs-toggle="dropdown">
-                                                        Actions
+                                                        DETALLES
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item"
                                                            href="{{ route('sucursales.show',$sucursale->id) }}">
-                                                            View
+                                                            Ver
                                                         </a>
                                                         <a class="dropdown-item"
                                                            href="{{ route('sucursales.edit',$sucursale->id) }}">
-                                                            Edit
+                                                            Editar
                                                         </a>
                                                         <form
                                                             action="{{ route('sucursales.destroy',$sucursale->id) }}"
@@ -129,7 +171,7 @@
                                                                     onclick="if(!confirm('Do you Want to Proceed?')){return false;}"
                                                                     class="dropdown-item text-red"><i
                                                                     class="fa fa-fw fa-trash"></i>
-                                                                Delete
+                                                                Eliminar
                                                             </button>
                                                         </form>
                                                     </div>

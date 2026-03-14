@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use Illuminate\Http\Request;
 
+
 /**
  * Class CitaController
  * @package App\Http\Controllers
@@ -17,12 +18,20 @@ class CitaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $citas = Cita::paginate(10);
+{
+    $citas = Cita::paginate(10);
 
-        return view('cita.index', compact('citas'))
-            ->with('i', (request()->input('page', 1) - 1) * $citas->perPage());
-    }
+    // Crear objeto vacío para el modal
+    $cita = new Cita();
+
+    // Horas ocupadas del día actual
+    $horas_ocupadas = Cita::where('fecha', date('Y-m-d'))
+        ->pluck('hora')
+        ->toArray();
+
+    return view('cita.index', compact('citas', 'cita', 'horas_ocupadas'))
+        ->with('i', (request()->input('page', 1) - 1) * $citas->perPage());
+}
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +42,7 @@ class CitaController extends Controller
     {
         $cita = new Cita();
 
-$horas_ocupadas = \App\Models\Cita::where('fecha', date('Y-m-d'))
+     $horas_ocupadas = \App\Models\Cita::where('fecha', date('Y-m-d'))
         ->pluck('hora')
         ->toArray();
 
@@ -53,6 +62,11 @@ $horas_ocupadas = \App\Models\Cita::where('fecha', date('Y-m-d'))
      */
     public function store(Request $request)
 {
+     $request->merge([
+        'nombre' => strtoupper($request->nombre)
+    ]);
+
+    $request->validate(Cita::$rules);
     // Validación básica
     $request->validate(Cita::$rules);
 

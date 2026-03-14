@@ -20,19 +20,121 @@
                 </div>
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a href="{{ route('solicitudes.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <line x1="12" y1="5" x2="12" y2="19"/>
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                            </svg>
-                            Create Solicitude
-                        </a>
+                    <button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#modalSolicitud">
+    + Nueva Solicitud
+</button>
+
+
+<div class="modal fade" id="modalSolicitud" tabindex="-1" aria-labelledby="modalSolicitudLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <form action="{{ route('solicitudes.store') }}" method="POST">
+                @csrf
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSolicitudLabel">Nueva Solicitud</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- NOMBRE -->
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        {{ Form::text('nombre', old('nombre'), [
+                            'class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''),
+                            'placeholder' => 'Nombre completo',
+                            'oninput' => "this.value = this.value.toUpperCase().replace(/[^A-ZÁÉÍÓÚÑ ]/g, '')"
+                        ]) }}
+                        {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
+
+                    <!-- CORREO -->
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        {{ Form::email('correo', old('correo'), [
+                            'class' => 'form-control' . ($errors->has('correo') ? ' is-invalid' : ''),
+                            'placeholder' => 'correo@ejemplo.com',
+                            'required'
+                        ]) }}
+                        {!! $errors->first('correo', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- TELEFONO -->
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        {{ Form::text('telefono', old('telefono'), [
+                            'class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''),
+                            'placeholder' => 'Ej: 9511234589',
+                            'maxlength' => 10,
+                            'pattern' => '[0-9]{10}',
+                            'oninput' => "this.value = this.value.replace(/[^0-9]/g, '')"
+                        ]) }}
+                        {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- MARCA -->
+                    <div class="mb-3">
+                        <label class="form-label">Marca</label>
+                        {{ Form::select('marca', [
+                            '' => 'Seleccione una marca',
+                            'MICHELIN' => 'MICHELIN',
+                            'BFGOODRICH' => 'BFGOODRICH',
+                            'UNIROYAL' => 'UNIROYAL',
+                            'BRIDGESTONE' => 'BRIDGESTONE'
+                        ], old('marca'), [
+                            'class' => 'form-control' . ($errors->has('marca') ? ' is-invalid' : '')
+                        ]) }}
+                        {!! $errors->first('marca', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- MODELO -->
+                    <div class="mb-3">
+                        <label class="form-label">Modelo</label>
+                        {{ Form::text('modelo', old('modelo'), [
+                            'class' => 'form-control' . ($errors->has('modelo') ? ' is-invalid' : ''),
+                            'placeholder' => 'Ej: MICHELIN PILOT SPORT',
+                            'maxlength' => 15,
+                            'oninput' => "this.value = this.value.toUpperCase()"
+                        ]) }}
+                        {!! $errors->first('modelo', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                    <!-- MEDIDA -->
+                    <div class="mb-3">
+                        <label class="form-label">Medida</label>
+                        {{ Form::text('medida', old('medida'), [
+                            'class' => 'form-control' . ($errors->has('medida') ? ' is-invalid' : ''),
+                            'placeholder' => 'Ej: 205/55 R16',
+                            'maxlength' => 12,
+                            'oninput' => "this.value = this.value
+                                .toUpperCase()
+                                .replace(/[^0-9\\/R ]/g, '')"
+                        ]) }}
+                        {!! $errors->first('medida', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
@@ -49,25 +151,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Solicitude</h3>
                         </div>
-                        <div class="card-body border-bottom py-3">
-                            <div class="d-flex">
-                                <div class="text-muted">
-                                    Show
-                                    <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="10" size="3"
-                                               aria-label="Invoices count">
-                                    </div>
-                                    entries
-                                </div>
-                                <div class="ms-auto text-muted">
-                                    Search:
-                                    <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm"
-                                               aria-label="Search invoice">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="table-responsive min-vh-100">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -115,29 +199,27 @@
                                                 <div class="dropdown">
                                                     <button class="btn dropdown-toggle align-text-top"
                                                             data-bs-toggle="dropdown">
-                                                        Actions
+                                                        ESTADO 
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item"
                                                            href="{{ route('solicitudes.show',$solicitude->id) }}">
-                                                            View
+                                                            VER
                                                         </a>
                                                         <a class="dropdown-item"
-                                                           href="{{ route('solicitudes.edit',$solicitude->id) }}">
-                                                            Edit
+                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
+                                                            FINALIZADO
                                                         </a>
-                                                        <form
-                                                            action="{{ route('solicitudes.destroy',$solicitude->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                    onclick="if(!confirm('Do you Want to Proceed?')){return false;}"
-                                                                    class="dropdown-item text-red"><i
-                                                                    class="fa fa-fw fa-trash"></i>
-                                                                Delete
-                                                            </button>
-                                                        </form>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
+                                                         PROCESO
+                                                        </a>
+                                                     <a class="dropdown-item"
+                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
+                                                          CANCELADA
+                                                        </a>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

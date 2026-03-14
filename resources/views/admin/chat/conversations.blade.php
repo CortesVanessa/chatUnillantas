@@ -3,11 +3,11 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3>💬 Conversaciones del Chatbot</h3>
+        <h3>Conversaciones del Chatbot</h3>
     </div>
 
     <div class="card-body">
-        <table class="table table-hover table-dark">
+        <table class="table table">
             <thead>
                 <tr>
                     <th>#</th>

@@ -18,10 +18,23 @@
                     <span class="p-2 rounded {{ $msg->sender=='user'?'bg-primary':'bg-success' }} text-white" 
                           style="max-width:70%; display:inline-block;">
                         {{ $msg->message }}
+                        
                     </span>
+                    
                 </div>
             @endforeach
-
+              <!-- Opciones de botones del menu -->
+             @if(isset($menuOptions))
+    <div class="mt-2 ms-2">
+        @foreach($menuOptions as $option)
+            <button 
+                class="btn btn-success m-1"
+                onclick="sendOption('{{ $option }}')">
+                {{ $option }}
+            </button>
+        @endforeach
+    </div>
+@endif  
         </div>
 
         <!-- Opciones de botones -->
@@ -84,3 +97,40 @@ function showOptions(options){
 }
 </script>
 @endsection
+<script>
+function sendOption(text) {
+    fetch("{{ url('chatbot/send') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ message: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        location.reload();
+    });
+}
+</script>
+<script>
+function sendOption(option) {
+    sendMessage(option);
+}
+
+function sendMessage(message) {
+
+    fetch('/chat/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        addMessage('bot', data.reply);
+    });
+}
+</script>

@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'title' => 'Tablar',
+    'title' => 'Unillantas',
     'title_prefix' => '',
     'title_postfix' => '',
     'bottom_title' => 'Tablar',
@@ -112,7 +112,7 @@ return [
     */
 
     'use_route_url' => true,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -193,29 +193,17 @@ return [
          [
             'text' => 'CHATBOT-Respuestas',
             'url' => '/dashboard/chatbot',
-            //'url' => '/chatbot/send',
             'icon' => 'ti ti-message',
             
             
         ],
-        [
-            'text' => 'CHAT',
-            'url' => '/chatbot',
-            'icon' => 'ti ti-message',
-            
-            
-        ],
+      
         [
     'text' => 'CONVERSACIONES',
     'url' => '/dashboard/chats',
     'icon' => 'ti ti-messages',
 ],
- [
-    'text' => 'BURBUJA DE CHAT',
-    'url' => '/register',
-    'icon' => 'ti ti-messages',
-],
-
+ 
         
 
     ],

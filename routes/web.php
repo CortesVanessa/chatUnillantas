@@ -43,7 +43,7 @@ Route::get('/chat-public', [ChatbotController::class, 'publicChat'])
 //////////////////////////
 
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
@@ -84,7 +84,8 @@ use App\Http\Controllers\Admin\ChatbotResponseController;
 
 Route::get('/chat', [ChatBotController::class, 'index']);
 Route::post('/chatbot/send', [ChatBotController::class, 'send'])->name('chatbot.send');
-;
+Route::resource('chatbot', ChatbotController::class);
+
 // PANEL ADMIN (dashboard)
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::resource('chatbot', ChatbotResponseController::class);
@@ -96,8 +97,7 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
         ->name('chats.show');
         //Route::get('/chat', function () {
     //return view('chatbot.chat',['messages' => []]);
-    
-  
+   
 });
 //});
 

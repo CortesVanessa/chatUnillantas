@@ -24,13 +24,13 @@ class Cita extends Model
 {
     
     static $rules = [
-		'nombre' => ['required|string|max:40|regex:/^[A-ZÁÉÍÓÚÑ ]+$/'],
-		'correo' => ['required', 'email:rfc,dns'],
-		'telefono' => ['required','digits:10'],
-		'fecha' => 'required',
-		'hora' => 'required',
-		'asunto' => 'required',
-    ];
+    'nombre' => ['required','string','max:40','regex:/^[A-ZÁÉÍÓÚÑ ]+$/'],
+    'correo' => ['required','email:rfc,dns'],
+    'telefono' => ['required','digits:10'],
+    'fecha' => ['required'],
+    'hora' => ['required' ],
+    'asunto' => ['required','string','max:100'],
+];
 
     protected $perPage = 20;
 

@@ -58,6 +58,10 @@
 {{ $user->email }}
 </div>
 
+<div class="form-group">
+<strong>Password:</strong>
+{{ $user->password }}
+</div>
                         </div>
                     </div>
                 </div>
