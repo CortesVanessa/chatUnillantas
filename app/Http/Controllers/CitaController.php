@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cita;
 use Illuminate\Http\Request;
-
+use App\Models\Servicio;
+use App\Models\Producto;
 
 /**
  * Class CitaController
@@ -12,25 +13,32 @@ use Illuminate\Http\Request;
  */
 class CitaController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+  public function index()
 {
-    $citas = Cita::paginate(10);
-
-    // Crear objeto vacío para el modal
+    $citas = Cita::with(['producto','servicio'])->paginate(10);
     $cita = new Cita();
 
-    // Horas ocupadas del día actual
+    $servicios = Servicio::all();
+    $productos = Producto::all();
+
     $horas_ocupadas = Cita::where('fecha', date('Y-m-d'))
         ->pluck('hora')
         ->toArray();
 
-    return view('cita.index', compact('citas', 'cita', 'horas_ocupadas'))
-        ->with('i', (request()->input('page', 1) - 1) * $citas->perPage());
+    return view('cita.index', compact(
+        'citas',
+        'cita',
+        'servicios',
+        'productos',
+        'horas_ocupadas'
+    ))->with('i', (request()->input('page', 1) - 1) * $citas->perPage());
 }
 
     /**
@@ -45,6 +53,9 @@ class CitaController extends Controller
      $horas_ocupadas = \App\Models\Cita::where('fecha', date('Y-m-d'))
         ->pluck('hora')
         ->toArray();
+ // Obtener servicios y productos
+    $servicios = Servicio::all();
+    $productos = Producto::all();
 
        return view('cita.create', compact('cita', 'horas_ocupadas'));
 
@@ -137,11 +148,37 @@ class CitaController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function cancelar($id)
     {
-        $cita = Cita::find($id)->delete();
+        $cita = Cita::findOrFail($id);
 
-        return redirect()->route('citas.index')
-            ->with('success', 'Cita deleted successfully');
+    $cita->status = 'cancelado';
+    $cita->save();
+
+    return redirect()->route('citas.index')
+        ->with('success','cita cancelada correctamente');
     }
+
+      public function finalizar($id)
+{
+    $cita = Cita::findOrFail($id);
+
+    $cita->status = 'finalizado';
+    $cita->save();
+
+    return redirect()->route('citas.index')
+        ->with('success','cita finalizada correctamente');
+}
+ 
+ public function procesar($id)
+{
+     $cita = Cita::findOrFail($id);
+
+    $cita->status = 'proceso';
+    $cita->save();
+
+    return redirect()->route('citas.index')
+        ->with('success','cita en proceso');
+}
+
 }

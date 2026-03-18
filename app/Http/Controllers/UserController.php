@@ -124,10 +124,25 @@ class UserController extends Controller
      * @throws \Exception
      */
     public function destroy($id)
-    {
-        $user = User::find($id)->delete();
+{
+    $user = User::findOrFail($id);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
-    }
+    $user->status = 'inactivo';
+    $user->save();
+
+    return redirect()->route('users.index')
+        ->with('success','Usuario desactivado correctamente');
+}
+
+
+   public function activar($id)
+{
+    $user = User::findOrFail($id);
+
+    $user->status = 'activo';
+    $user->save();
+
+    return redirect()->route('users.index')
+        ->with('success','Usuario activado correctamente');
+}
 }

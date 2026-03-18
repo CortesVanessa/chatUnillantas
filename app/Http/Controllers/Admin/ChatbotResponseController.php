@@ -51,4 +51,6 @@ class ChatbotResponseController extends Controller
         $chatbot->delete();
         return back()->with('success', 'Respuesta eliminada');
     }
+ 
+
 }

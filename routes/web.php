@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SolicitudeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CitaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +49,12 @@ Route::get('/chat-public', [ChatbotController::class, 'publicChat'])
 
 Auth::routes();
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    return redirect()->route('chats.index');
+});
+
+
 
 Route::resource('/productos', App\Http\Controllers\ProductoController::class);
 Route::resource('/servicios', App\Http\Controllers\ServicioController::class);
@@ -95,8 +102,19 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     Route::get('chats/{session}', [\App\Http\Controllers\Admin\ChatConversationController::class, 'show'])
         ->name('chats.show');
+
+        Route::put('/users/{id}/activar', [UserController::class,'activar'])->name('users.activar');
         //Route::get('/chat', function () {
     //return view('chatbot.chat',['messages' => []]);
+    Route::put('/citas/{id}/cancelar', [CitaController::class, 'cancelar'])->name('citas.cancelar');
+
+Route::put('/citas/{id}/procesar', [CitaController::class, 'procesar'])->name('citas.procesar');
+
+Route::put('/citas/{id}/finalizar', [CitaController::class, 'finalizar'])->name('citas.finalizar');
+
+
+Route::put('/solicitudes/{id}/cancelar', [SolicitudeController::class, 'cancelar'])
+    ->name('solicitudes.cancelar');
    
 });
 //});

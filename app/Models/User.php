@@ -22,6 +22,7 @@ static $rules = [
         'apellido_materno',
         'email',
         'password',
+        'status'
     ];
 
     protected $hidden = [

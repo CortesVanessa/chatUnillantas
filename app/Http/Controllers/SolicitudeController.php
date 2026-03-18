@@ -106,4 +106,20 @@ class SolicitudeController extends Controller
         return redirect()->route('solicitudes.index')
             ->with('success', 'Solicitude deleted successfully');
     }
+
+
+public function cancelar($id)
+{
+    $solicitude = Solicitude::findOrFail($id);
+
+    $solicitude->status = 'cancelado';
+     $solicitude->save();
+
+    return redirect()->route('solicitudes.index')
+        ->with('success','Solicitud cancelada correctamente');
 }
+}
+
+
+
+        

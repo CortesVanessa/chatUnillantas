@@ -15,8 +15,7 @@
                     <div class="btn-list">
                   <span class="d-none d-sm-inline">
                    
-                    <a href="{{ route('chat.public') }}" target="_blank" class="btn btn-primary">
-                      💬 Abrir Chat
+                    <a href="{{ route('chats.index') }}" target="_blank" class="btn btn-primary">
                      </a>
                   </span>
                         

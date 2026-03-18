@@ -151,7 +151,7 @@
                                     
 										<th>Name</th>
 										<th>Email</th>
-
+                                         <th>Status</th>
                                     <th class="w-1"></th>
                                 </tr>
                                 </thead>
@@ -165,7 +165,7 @@
                                         
 											<td>{{ $user->name }}</td>
 											<td>{{ $user->email }}</td>
-
+                                             <td>{{ $user->status }}</td>
                                         <td>
                                             <div class="btn-list flex-nowrap">
                                                 <div class="dropdown">
@@ -178,19 +178,31 @@
                                                            href="{{ route('users.show',$user->id) }}">
                                                             Ver usuario
                                                         </a>
-                                                        
+                                                        <form
+                                                            action="{{ route('users.activar',$user->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                    onclick="if(!confirm('deseas activar al usuario?')){return false;}"
+                                                                    class="dropdown-item text-red"><i
+                                                                    class="fa fa-fw fa-trash"></i>
+                                                                ACTIVAR
+                                                            </button>
+                                                        </form>
                                                         <form
                                                             action="{{ route('users.destroy',$user->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
-                                                                    onclick="if(!confirm('Do you Want to Proceed?')){return false;}"
+                                                                    onclick="if(!confirm('deseas desactivar al usuario?')){return false;}"
                                                                     class="dropdown-item text-red"><i
                                                                     class="fa fa-fw fa-trash"></i>
-                                                                Delete
+                                                                DESACTIVAR
                                                             </button>
                                                         </form>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

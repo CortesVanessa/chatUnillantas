@@ -35,6 +35,9 @@ class Servicio extends Model
      */
     protected $fillable = ['clave','servicio','precio'];
 
-
+public function citas()
+{
+    return $this->hasMany(Cita::class);
+}
 
 }

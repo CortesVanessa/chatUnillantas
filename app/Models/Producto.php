@@ -38,7 +38,10 @@ class Producto extends Model
      * @var array
      */
     protected $fillable = ['clave','modelo','marca','stock','precio'];
-
+public function citas()
+{
+    return $this->hasMany(Cita::class);
+}
 
 
 }

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('medida');
+            $table->enum('status',['proceso','cancelado','finalizado'])->default('proceso');
             
-
             $table->timestamps();
         });
     }

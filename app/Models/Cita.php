@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use \App\Models\Producto;
+use \App\Models\Servicio;
 /**
  * Class Cita
  *
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property $fecha
  * @property $hora
  * @property $asunto
+ * @property $producto
+ * @property $servicio
  * @property $created_at
  * @property $updated_at
  *
@@ -30,6 +33,7 @@ class Cita extends Model
     'fecha' => ['required'],
     'hora' => ['required' ],
     'asunto' => ['required','string','max:100'],
+
 ];
 
     protected $perPage = 20;
@@ -39,8 +43,17 @@ class Cita extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre','correo','telefono','fecha','hora','asunto'];
+    protected $fillable = ['nombre','correo','telefono','fecha','hora','asunto','servicio_id',
+'producto_id'];
 
+public function servicio()
+{
+    return $this->belongsTo(Servicio::class);
+}
 
+public function producto()
+{
+    return $this->belongsTo(Producto::class);
+}
 
 }

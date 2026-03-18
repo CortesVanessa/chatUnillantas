@@ -63,6 +63,28 @@
               ]) }}
               {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
           </div>
+          <div class="form-group mb-3">
+            <label>Servicio</label>
+              <select name="servicio_id" class="form-control">
+                  @foreach($servicios as $servicio)
+                 <option value="{{ $servicio->id }}">
+            {{ $servicio->servicio }} - ${{ $servicio->precio }}
+        </option>
+                 @endforeach
+              </select>
+          </div>
+
+             <div class="form-group mb-3">
+                    <label>Producto</label>
+           <select name="producto_id" class="form-control">
+              @foreach($productos as $producto)
+               <option value="{{ $producto->id }}">
+            {{ $producto->marca }} {{ $producto->modelo }}
+                </option>
+             @endforeach
+                </select>
+                 </div>
+
 
           <div class="form-group mb-3">
               <label class="form-label">Fecha</label>
@@ -132,8 +154,8 @@
                         <div class="card-body border-bottom py-3">
                             
                         </div>
-                        <div class="table-responsive min-vh-100">
-                            <table class="table card-table table-vcenter text-nowrap datatable">
+                        <div class="table-responsive" style="overflow:visible;">
+                            <table class="table card-table table-vcenter datatable">
                                 <thead>
                                 <tr>
                                     <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox"
@@ -155,7 +177,9 @@
 										<th>Fecha</th>
 										<th>Hora</th>
 										<th>Asunto</th>
-                                        
+                                        <th>producto</th>
+                                        <th>servicio</th>
+                                        <th>status</th>
 
                                     <th class="w-1"></th>
                                 </tr>
@@ -174,40 +198,56 @@
 											<td>{{ $cita->fecha }}</td>
 											<td>{{ $cita->hora }}</td>
 											<td>{{ $cita->asunto }}</td>
+                                            <td>{{ $cita->producto->modelo ?? ''}}</td>
+                                            <td>{{ $cita->servicio->servicio ?? ''}}</td>
+                                            <td>{{ $cita->status }}</td>
                                            
 
                                         <td>
-                                            <div class="btn-list flex-nowrap">
-                                                <div class="dropdown">
-                                                    <button class="btn dropdown-toggle align-text-top"
-                                                            data-bs-toggle="dropdown">
-                                                        ESTADO
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('citas.show',$cita->id) }}">
-                                                            FINALIZADA
-                                                        </a>
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('citas.edit',$cita->id) }}">
-                                                            EN PROCESO
-                                                        </a>
-                                                        <form
-                                                            action="{{ route('citas.destroy',$cita->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                    onclick="if(!confirm('Do you Want to Proceed?')){return false;}"
-                                                                    class="dropdown-item text-red"><i
-                                                                    class="fa fa-fw fa-trash"></i>
-                                                                CANCELADA
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
+<div class="btn-list flex-nowrap">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle align-text-top"
+                data-bs-toggle="dropdown"
+                data-bs-boundary="viewport">
+            DETALLES
+        </button>
+        <div class="dropdown-menu dropdown-menu-end">
+<form action="{{ route('citas.procesar',$cita->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <button type="submit"
+                        onclick="return confirm('¿Deseas procesar la cita?')"
+                        class="dropdown-item text-danger">
+                    procesar
+                </button>
+            <form action="{{ route('citas.cancelar',$cita->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <button type="submit"
+                        onclick="return confirm('¿Deseas cancelar la cita?')"
+                        class="dropdown-item text-danger">
+                    Cancelar
+                </button>
+
+            </form>
+            <form action="{{ route('citas.finalizar',$cita->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <button type="submit"
+                        onclick="return confirm('¿Deseas finalizar la cita?')"
+                        class="dropdown-item text-danger">
+                    Finalizar
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+</td>
                                     </tr>
                                 @empty
                                     <td>No Data Found</td>
@@ -224,10 +264,9 @@
             </div>
         </div>
     </div>
-@endsection
+    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -262,7 +301,8 @@ document.addEventListener("DOMContentLoaded", function () {
         disable: horasOcupadas
     });
 });
-</script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+@endsection
+
+
+

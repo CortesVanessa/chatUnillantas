@@ -175,6 +175,7 @@
 										<th>Marca</th>
 										<th>Modelo</th>
 										<th>Medida</th>
+                                        <th>status</th>
 
                                     <th class="w-1"></th>
                                 </tr>
@@ -193,6 +194,7 @@
 											<td>{{ $solicitude->marca }}</td>
 											<td>{{ $solicitude->modelo }}</td>
 											<td>{{ $solicitude->medida }}</td>
+                                            <td>{{ $solicitude->status }}</td>
 
                                         <td>
                                             <div class="btn-list flex-nowrap">
@@ -206,18 +208,16 @@
                                                            href="{{ route('solicitudes.show',$solicitude->id) }}">
                                                             VER
                                                         </a>
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
-                                                            FINALIZADO
-                                                        </a>
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
-                                                         PROCESO
-                                                        </a>
-                                                     <a class="dropdown-item"
-                                                           href="{{ route('solicitudes.show',$solicitude->id) }}">
-                                                          CANCELADA
-                                                        </a>
+                   
+                                                     <form action="{{ route('solicitudes.cancelar',$solicitude->id) }}" method="POST">
+                                                       @csrf
+                                                      @method('PUT')
+
+                                                     <button type="submit"
+                                                       onclick="return confirm('¿Deseas procesar la cita?')"
+                                                        class="dropdown-item text-danger">
+                                                               cancelar
+                                                                  </button>
                                                         
                                                         
                                                     </div>

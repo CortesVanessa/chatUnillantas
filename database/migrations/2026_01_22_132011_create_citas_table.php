@@ -18,10 +18,12 @@ return new class extends Migration
             $table->String('telefono');
              $table->date('fecha')->nullable(false);
             $table->time('hora')->nullable(false);
+            $table->unique(['fecha', 'hora']);
             $table->String('asunto');
-            $table->timestamps();
-
-              $table->unique(['fecha', 'hora']);
+            $table->foreignId('servicio_id')->constrained('servicios');
+    $table->foreignId('producto_id')->constrained('productos');
+         $table->enum('status',['proceso','cancelado','finalizado'])->default('proceso');
+$table->timestamps();
         });
     }
 
