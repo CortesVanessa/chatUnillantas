@@ -116,6 +116,7 @@ Route::put('/citas/{id}/finalizar', [CitaController::class, 'finalizar'])->name(
 Route::put('/solicitudes/{id}/cancelar', [SolicitudeController::class, 'cancelar'])
     ->name('solicitudes.cancelar');
    
+Route::put('/solicitudes/{id}/finalizar', [SolicitudeController::class, 'finalizar'])->name('solicitudes.finalizar');
 });
 //});
 

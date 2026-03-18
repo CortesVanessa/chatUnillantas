@@ -118,6 +118,29 @@ public function cancelar($id)
     return redirect()->route('solicitudes.index')
         ->with('success','Solicitud cancelada correctamente');
 }
+
+public function procesar($id)
+{
+    $solicitude = Solicitude::findOrFail($id);
+
+    $solicitude->status = 'proceso';
+     $solicitude->save();
+
+    return redirect()->route('solicitudes.index')
+        ->with('success','Solicitud en proceso ');
+}
+
+public function finalizar($id)
+{
+    $solicitude = Solicitude::findOrFail($id);
+
+    $solicitude->status = 'finalizado';
+     $solicitude->save();
+
+    return redirect()->route('solicitudes.index')
+        ->with('success','Solicitud finalizada correctamente ');
+}
+
 }
 
 

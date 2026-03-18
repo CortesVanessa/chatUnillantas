@@ -214,11 +214,19 @@
                                                       @method('PUT')
 
                                                      <button type="submit"
-                                                       onclick="return confirm('¿Deseas procesar la cita?')"
+                                                       onclick="return confirm('¿Deseas cancelar la solicitud?')"
                                                         class="dropdown-item text-danger">
                                                                cancelar
                                                                   </button>
-                                                        
+                                                         <form action="{{ route('solicitudes.finalizar',$solicitude->id) }}" method="POST">
+                                                       @csrf
+                                                      @method('PUT')
+
+                                                     <button type="submit"
+                                                       onclick="return confirm('¿Deseas finalizar la solicitud?')"
+                                                        class="dropdown-item text-danger">
+                                                               finalizar
+                                                                  </button>
                                                         
                                                     </div>
                                                 </div>
